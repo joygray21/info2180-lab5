@@ -12,25 +12,38 @@ $stmt = $conn->query("SELECT * FROM countries");
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
-<!-- <ul>
-<?php foreach ($results as $row): ?>
-  <li><?= $row['name'] . ' is ruled by ' . $row['head_of_state']; ?></li>
-<?php endforeach; ?>
-</ul> -->
+
 
 
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'GET'){
-  if(isset($_GET['country']) && !empty($_GET['country'])){
+  if (isset($_GET['country']) && !empty($_GET['country'])){
     $country = filter_input(INPUT_GET, 'country', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $found = false;
+    // $found = false;
     $stmt = $conn->query("SELECT * FROM countries WHERE name like '%$country%'");
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    ?>
+    if (!empty($results)){
+      ?>
+      <ul>
+      <?php foreach ($results as $row): ?>
+        <li><?= $row['name'] . ' is ruled by ' . $row['head_of_state']; ?></li>
+      <?php endforeach;?>
+      </ul>
+      <?php  
+    }
+    else {
+      ?>
+      <ul>
+        <li><?= "Country not found";?></li>
+      </ul>
+      <?php
+    }
+  }
+  else {?>
     <ul>
     <?php foreach ($results as $row): ?>
       <li><?= $row['name'] . ' is ruled by ' . $row['head_of_state']; ?></li>
-    <?php endforeach;?>
+    <?php endforeach; ?>
     </ul>
     <?php
   }
