@@ -1,5 +1,6 @@
 window.onload = function(){
     var lbtn = document.querySelector('#lookup');
+    var lcitiesbtn = document.querySelector('#lookupcities');
     var rdiv = document.querySelector('#result')
     var xhr;
     
@@ -19,6 +20,21 @@ window.onload = function(){
 
     }
 
+    lcitiesbtn.onclick = function(element){
+        element.preventDefault();
+
+        xhr = new XMLHttpRequest();
+        var country = document.querySelector('#country').value;
+
+        var url = "world.php?country=" + country;
+        url += "&context=cities";
+        xhr.onreadystatechange = printInfo;
+        xhr.open("GET", url);
+
+        xhr.send();
+    }
+    
+
 
     function printInfo(){
         if( (xhr.readyState === 4)){
@@ -34,4 +50,5 @@ window.onload = function(){
             }
         }
     }
+
 }

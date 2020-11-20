@@ -17,45 +17,17 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'GET'){
-  if (isset($_GET['country']) && !empty($_GET['country'])){
-    $country = filter_input(INPUT_GET, 'country', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    // $found = false;
-    $stmt = $conn->query("SELECT * FROM countries WHERE name like '%$country%'");
-    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    if (!empty($results)){
-      ?>
-      <!-- <ul> -->
-      <table>
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Continent</th>
-          <th scope="col">Independence</th>
-          <th scope="col">Head of State</th>
-        </tr>
-      </thead>
-      <tbody>
-      <?php foreach ($results as $row): ?>
-        <!-- <li></li> -->
-        <tr>
-          <td><?= $row['name'];?></td>
-          <td><?= $row['continent'];?></td>
-          <td><?= $row['independence_year'];?></td>
-          <td><?= $row['head_of_state'];?></td>
-        </tr>
-      <?php endforeach;?>
-      <!-- </ul> -->
-      </tbody>
-      </table>
-
-      <?php  
-    }
-    else {
-      ?>
-      <!-- <ul> -->
-        <!-- <li></li> -->
-      <!-- </ul> -->
-      <table>
+  if (!isset($_GET['context'])){
+    
+    if (isset($_GET['country']) && !empty($_GET['country'])){
+      $country = filter_input(INPUT_GET, 'country', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+      // $found = false;
+      $stmt = $conn->query("SELECT * FROM countries WHERE name like '%$country%'");
+      $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+      if (!empty($results)){
+        ?>
+        <!-- <ul> -->
+        <table>
         <thead>
           <tr>
             <th scope="col">Name</th>
@@ -65,43 +37,137 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET'){
           </tr>
         </thead>
         <tbody>
+        <?php foreach ($results as $row): ?>
+          <!-- <li></li> -->
           <tr>
-            <td>None</td>
-            <td>None</td>
-            <td>None</td>
-            <td>None</td>
+            <td><?= $row['name'];?></td>
+            <td><?= $row['continent'];?></td>
+            <td><?= $row['independence_year'];?></td>
+            <td><?= $row['head_of_state'];?></td>
           </tr>
+        <?php endforeach;?>
+        <!-- </ul> -->
         </tbody>
+        </table>
+  
+        <?php  
+      }
+      else {
+        ?>
+        <!-- <ul> -->
+          <!-- <li></li> -->
+        <!-- </ul> -->
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Continent</th>
+              <th scope="col">Independence</th>
+              <th scope="col">Head of State</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>None</td>
+              <td>None</td>
+              <td>None</td>
+              <td>None</td>
+            </tr>
+          </tbody>
+        </table>
+  
+        <?php
+      }
+    }
+    else {?>
+      <!-- <ul> -->
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Continent</th>
+            <th scope="col">Independence</th>
+            <th scope="col">Head of State</th>
+          </tr>
+        </thead>
+      <tbody>
+      <?php foreach ($results as $row): ?>
+        <!-- <li></li> -->
+        <tr>
+          <td><?= $row['name'];?></td>
+          <td><?= $row['continent'];?></td>
+          <td><?= $row['independence_year'];?></td>
+          <td><?= $row['head_of_state'];?></td>
+        </tr> 
+      <?php endforeach; ?>
+      <!-- </ul> -->
+      </tbody>
       </table>
-
-      <?php
+  
+    <?php
     }
   }
-  else {?>
-    <!-- <ul> -->
-    <table>
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Continent</th>
-          <th scope="col">Independence</th>
-          <th scope="col">Head of State</th>
-        </tr>
-      </thead>
-    <tbody>
-    <?php foreach ($results as $row): ?>
-      <!-- <li></li> -->
-      <tr>
-        <td><?= $row['name'];?></td>
-        <td><?= $row['continent'];?></td>
-        <td><?= $row['independence_year'];?></td>
-        <td><?= $row['head_of_state'];?></td>
-      </tr> 
-    <?php endforeach; ?>
-    <!-- </ul> -->
-    </tbody>
-    </table>
+  else{
+    if (isset($_GET['country']) && !empty($_GET['country'])){
+      $country = filter_input(INPUT_GET, 'country', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    <?php
+      $stmt = $conn->query("SELECT ci.name, ci.district, ci.population from cities as ci join countries as c on ci.country_code = c.code WHERE c.name like '%$country%'");
+      $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+      if (!empty($results)){ ?>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">District</th>
+              <th scope="col">Population</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($results as $row): ?>
+              <tr>
+                <td><?= $row['name'];?></td>
+                <td><?= $row['district'];?></td>
+                <td><?= $row['population'];?></td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+          </table>
+      <?php
+      }
+      else{ ?>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">District</th>
+              <th scope="col">Population</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td>None</td>
+                <td>None</td>
+                <td>None</td>
+              </tr>
+          </tbody>
+          </table>
+        <?php
+      }
+    }
+    else{ ?>
+      <table>
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">District</th>
+              <th scope="col">Population</th>
+            </tr>
+          </thead>
+      </table>
+      <?php
+    }
+    
   }
+  
 }
