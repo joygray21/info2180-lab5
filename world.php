@@ -24,27 +24,84 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET'){
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     if (!empty($results)){
       ?>
-      <ul>
+      <!-- <ul> -->
+      <table>
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Continent</th>
+          <th scope="col">Independence</th>
+          <th scope="col">Head of State</th>
+        </tr>
+      </thead>
+      <tbody>
       <?php foreach ($results as $row): ?>
-        <li><?= $row['name'] . ' is ruled by ' . $row['head_of_state']; ?></li>
+        <!-- <li></li> -->
+        <tr>
+          <td><?= $row['name'];?></td>
+          <td><?= $row['continent'];?></td>
+          <td><?= $row['independence_year'];?></td>
+          <td><?= $row['head_of_state'];?></td>
+        </tr>
       <?php endforeach;?>
-      </ul>
+      <!-- </ul> -->
+      </tbody>
+      </table>
+
       <?php  
     }
     else {
       ?>
-      <ul>
-        <li><?= "Country not found";?></li>
-      </ul>
+      <!-- <ul> -->
+        <!-- <li></li> -->
+      <!-- </ul> -->
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Continent</th>
+            <th scope="col">Independence</th>
+            <th scope="col">Head of State</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>None</td>
+            <td>None</td>
+            <td>None</td>
+            <td>None</td>
+          </tr>
+        </tbody>
+      </table>
+
       <?php
     }
   }
   else {?>
-    <ul>
+    <!-- <ul> -->
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Continent</th>
+          <th scope="col">Independence</th>
+          <th scope="col">Head of State</th>
+        </tr>
+      </thead>
+    <tbody>
     <?php foreach ($results as $row): ?>
-      <li><?= $row['name'] . ' is ruled by ' . $row['head_of_state']; ?></li>
+      <!-- <li></li> -->
+      <tr>
+        <td><?= $row['name'];?></td>
+        <td><?= $row['continent'];?></td>
+        <td><?= $row['independence_year'];?></td>
+        <td><?= $row['head_of_state'];?></td>
+      </tr> 
     <?php endforeach; ?>
-    </ul>
+    <!-- </ul> -->
+    </tbody>
+    </table>
+
     <?php
   }
 }
