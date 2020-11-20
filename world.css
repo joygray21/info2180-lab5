@@ -1,1 +1,39 @@
-/* Add your own styles */
+body{
+    margin: 0;
+    font-size: 18px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+header{
+    background-color: aqua;
+    padding: 10px;
+    text-align: center;
+}
+
+h1{
+    color: rgb(5, 5, 36); 
+}
+
+main{
+    margin-top: 40px;
+    margin-left: 150px;
+}
+
+button{
+    padding: 10px;
+    color: purple;
+    background-color: seashell;
+    border-radius: 5px;
+}
+
+table th td{
+    border: 1px solid black;
+}
+
+table{
+    border-collapse: collapse;
+}
+
+form{
+    /* display: ; */
+}
